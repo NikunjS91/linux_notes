@@ -1,0 +1,52 @@
+Users and file management
+system level commands
+
+1)uname command tells which platform this is.
+2)uptime tell us how long this instace is running
+3)date show date current
+4)who tells which users logged in at what time, how may user are there
+5)whoami current user who is loggedin show only one user details
+6)which show where is the location of that command
+    which bash
+7)id to see the user and id or users, groupid as well
+8)sudo : superuser with all permission
+9)shutdown need sudo to shutdown
+10)reboot to restart with sudo
+
+applation packege manager:
+1)apt command is application package manager( used to install tools or apps) need root access 
+    sudo apt install docker.io (installs docker if already present in the machine)
+    else
+    sudo apt-get install docker.io (-get will use internet to get docker from internet)
+    sudo apt-get update (update the package system)
+    sudo apt remove docker.io (remove the docker)
+
+2)yum:lentos dnf pacman:arch portage:gento all these are package manager for different linux types
+
+USER and Group management commands:
+
+sudo useradd -m UserName add user to the linux.
+    this create user
+
+sudo passwd UserName
+    this add password to user
+
+su UserName
+    this will help to switch user (somecases password will be required)
+    this switch to secondary users
+
+exit command will get you back to primary user
+
+sudo userdel UserName delete the user
+
+sudo groupadd GroupName
+    check it cat/etc/group
+    this creats group
+
+sudo gpasswd -a UserName GroupName  
+    this add the user to group
+
+sudo gpasswd -M Multiple_UserNames GroupName
+    this adds multiple user to group at once
+
+sudo groupdel GroupName

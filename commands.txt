@@ -1,0 +1,73 @@
+basic commands
+
+commands : description
+top :   to see cpu utilization
+df -h : hard disk usage
+free : ram usage in linux
+cd : change directory
+ls : list directory
+ls -a : detailes ls
+ls -ltr : 
+mkdir : make a directory
+pwd : to see current direcetory location
+touch : create new files(file name needed with extension)
+date : showes date
+clear : rest the screen clear
+rm : remove file 
+rm -r folder name: remove the folder
+rmndir : remove the directory
+cat filename.extension : show what inside the file
+echo "" : prints whats written in quotes1
+echo "hello" > demofile.txt : this redirect the output of echo "hello inside the demo.txt file
+zcat :see zip file content
+head file.extension : shows top 5 lines from a file
+head -n 5 filenamae.extension shows you top five lines -n stands for number
+tail file.extension : bottom 5 line of the files
+tail -f file.txt : monitors the file for new lines added  and then print it like logs
+less file.extension : shows page by page data from file
+more file.extesnion : shows more pages from file
+
+basic+ commands
+cp source_file description-location : copy file to destination (make two copies)
+mv source_file destination-location : move the file from one to another location
+mr old-Folder-name new-folder-name : rename folder
+wc file.extension : no of lines , words and bytes of a file
+ln -s location to file.extension softlink-file : link to softlink file
+ln location-file.extension hardlink : this created hardlink
+cut -b 1 file.extension : return 1 letter from the file (can use range 1-4 : returns 4 letters)
+tee : echo "hello" | tee hello.txt  : prints the first message then continue doing another task 
+sort file.extension : sort ascendingly
+diff file1.txt file2.txt : difference between two files
+vi file.extension : i button to insert, esc button to exit, :wq button to exit
+
+Login:
+ssh (secure shell) on port no 22 had the access of ssh and the communocation happens with keys.
+code:  ssh -i "linux-for-devops-key.pem" ubuntu@ec2-3-138-188-2.us-east-2.compute.amazonaws.com
+
+    -i is path to our private key file then put the file name in side (quotes"") or path with filename.
+    then follows the username in our case its ubuntu and a @ sign and public dns  all this is connected with no space.
+
+df command is use to see how much space is occupied and free space 
+    df -h help you get detail information with sizes in GB
+
+du is diskutility tell you about a specif folder we can use dot. to see current direcetory.
+    folder with bytes details 
+
+processes:
+
+ps command shows some imporatnt processess apart of all process.
+top command shows all processes with its pid and all data
+fuser command tells us about the NAS(network attached systems) you can think of a shared network space.
+
+kill is used to kill a process with process inside
+    kill -9 162
+
+free command tells us about the usage of system(ram memory)
+    free -h
+
+nohup command this creates a file and put the output of another command. can be use to catch logs in a file
+    onhup free -h
+    it can add another command next so it follows one file with two command output init(previour + new)
+
+vmstat command tells you about the virtual memory(ram)
+    vmstate -a 
