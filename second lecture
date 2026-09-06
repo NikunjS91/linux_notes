@@ -50,3 +50,40 @@ sudo gpasswd -M Multiple_UserNames GroupName
     this adds multiple user to group at once
 
 sudo groupdel GroupName
+
+
+File Permission commands:
+
+1)chmod 777 file_name(full access to user , group, other user)
+
+2)umask 0002 : for default file what should be file permissions by default
+
+3)sudo chown user-name file-name. extension
+    this changes the file ownership
+
+4)sudo chgrp group-name file-name.extension
+
+
+compress file:
+sudo apt install zip( install the zip tool)
+
+1)zip -r createfile.zip folder-name
+    create a zipfile of folder
+
+2)unzip filename.zip
+
+gunzip and gzip are tools
+
+tar and untar and its flags are important
+
+
+file sending local to server:
+scp -i "/Users/nikunjshetye/Desktop/linux-for-devops-key.pem" SomeshGhatuleAI.pdf ubuntu@ec2-18-118-150-154.us-east-2.compute.amazonaws.com:/home/ubuntu
+
+server to local:
+scp -i "/Users/nikunjshetye/Desktop/linux-for-devops-key.pem" -r ubuntu@ec2-18-118-150-154.us-east-2.compute.amazonaws.com:/home/ubuntu/SomeshGhatuleAI.pdf .
+
+
+rsync:
+
+rsync -e "ssh -i .pem file location" -avz (path-to-local folder) (remote server with path)
