@@ -1,0 +1,79 @@
+ping : calls the server by sending and receiving packages , we can find out the connection status with this.
+
+
+netstat:
+    these tools comes under a net-tools package so it must be installed
+    this command is user to check the active connections on server. and sockets
+
+ifconfig:
+    network interfaces in the server,shows all network configuration
+
+traceroute and tracepath:
+        this needs to be installed
+        find how does our request hops from local machine to data center address this can be found with traceroute
+        use path to see the path. 
+
+mtr:(my trace route)
+        pings and path both can be seen here.
+
+nsloopup:
+        shows which ipaddress is active on perticular DNS
+    
+telnet:
+        same as nslookup but with port name too
+        
+hostname:
+        shows the ipaddress
+
+ip:
+    ip address show(comand):
+        shows all ip address details
+
+iwconfig:
+    shows wireless network configurations.
+    need to be installed
+
+
+ss is same as netstat(above).
+
+dig :
+        this tells where the websight is hosted
+    
+whois:
+        tells information about websight with dns details
+
+nc(netcat):
+
+
+arp:
+        tells or ask the router and finds macaddress
+
+ifplugstatus:
+        need to be installed
+        shows which network interfaces are working
+
+daily use commands:
+
+curl:
+    calls endpoints
+    curl -x GET link
+    to structure the output add a (| jq) after curl command
+
+wget:
+    used to download from internet.
+    
+
+iptables:
+        need root permissios
+        tables information about ip
+
+watch:
+    repetative command output need to be seen them use the watch commands
+    it runs the command mentioned every 2 sec.
+    eg: watch -n 5 top
+
+nmap:
+      to scan a websight to check if there is any open port.
+
+route:
+    show route table: how does the internet is routing
