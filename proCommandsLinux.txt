@@ -1,0 +1,18 @@
+awk :(kinda programming)
+    this help to tally logs and view them accordingly based on the conditions, parameters, filer and range.
+    this only work with csv and tsv file meaning the structuerd files.
+    awk '' filename.extension
+    all the conditions must be written inside the ''.
+    '{print $2}'
+
+sed : this is exactly like awk but with few syntactical changes and this work live time with streaming.
+        and this can work with unstructure files too.
+        this work line by line.
+        sed '' filename.extension
+
+grep:
+    global regular expression pattern.
+    grep info app.logs
+    case insensitive flag available(-i)
+    -c for count
+    
