@@ -1,0 +1,82 @@
+here in linus we ran on Ec2,
+when we store something on linux we tend to store it in blocks meaning out hard drive.
+we call it volume.
+
+so to have more space in AWS we had a service called EBS(elastic block storeage)
+which grants us the ability to impove storage, today we will create different volumes,
+thats all the Linux volume and EBS intro
+
+command :
+
+lsblk: list all the attached volumes.
+        xvda is the name of the root volume
+
+df -h : shows free space
+    mount point and storangeß
+
+what is mount?
+    on ec2 connected with EBS the drive is called as xvda in other ways /dev/xvda is the linux to the attached drive.
+    linux functions start with / which we also call root directory the starting point.
+    so mount means binding the drive within linux in a perticular location is called mount.
+
+
+create volumes:
+    side panel on EC2 there will be EBS click on volumes
+    create volume with your configurations.
+    what is snapshot?
+        it is basically backup of volume, we can also create a volume same as backup.
+
+    attach the volume new created and connect it with instance.
+    use /dev/sdf because that the one we can start with else above is root.
+    check it with lsblk it will show you xvdf ends with f same as sdf.
+    volume added and connected. mount needed.
+    
+    all those volumes as also called physical volume
+    all these volumes we created and attached we can combine and call them volume group.
+    and from that  large volume group we can make logical volumes, which can be adjusted based on the requiremnets.
+     
+go into root use with sudo su.
+then run into logical volume manager of linux.
+ 
+command:
+
+lvm: enter into logical volume manager.
+ 
+till now we dont have physical volumes.
+lets create them.
+
+pvcreate /dev/xvdf /dev/xvdg /dev/xvdh : this create three volumn from blocks
+see them with pvs.
+
+lets make group volume name name them tws-volume
+vgcreate tws-vg /dev/xvdf /dev/xvdg : this will create group volume with combining two volumes.
+see them with vgs
+
+now lets creata a logical volume with the volume group.
+lvcreate -L 10G -n tws_lv tws_vg :  this will create a logical volume of 10Gb  name is tws_lv from tws_vg(volume group).
+see them with pvdisplay and lvdisplay and vgdisplay.
+
+lets do mounting?
+
+now first we will create a folder strcuture with
+mkdir /mnt/tws_lv_mount
+now we will format tha logical volume
+mkfs.ext4 /dev/tws_vg/tws_lv
+
+not mount to location:
+mount /dev/tws_vg/tws_lv /mnt/tws_lv_mount
+
+check it with df -h
+ 
+umount is used to unmount.
+again you can mount it.
+
+now lets work with direct drive not the logical volumes.
+
+make folders structures as we did same.
+not run mkfs -t ext4 /dev/xvdh :make file system types of ext4 with drive location
+now we mount it:
+mount /dev/xvdh /mnt/disk_mount
+
+add volume to logical volume
+lvextent -L 5G /dev/tws_lv_mount/tws_lv
