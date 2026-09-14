@@ -54,6 +54,18 @@ When you attach an EBS volume as `/dev/sdf`, Linux shows it as `/dev/xvdf`. The 
 
 ## Workflow: Attach an EBS Volume on AWS
 
+### EBS Volume Types
+
+| Type | Name | Use Case | Max IOPS |
+|------|------|----------|----------|
+| `gp3` | General Purpose SSD v3 | Most workloads — best price/performance | 16,000 |
+| `gp2` | General Purpose SSD v2 | Older default — IOPS tied to size | 16,000 |
+| `io1` / `io2` | Provisioned IOPS SSD | High-performance databases | 64,000+ |
+| `st1` | Throughput Optimized HDD | Big data, log processing (sequential reads) | 500 |
+| `sc1` | Cold HDD | Infrequent access, lowest cost | 250 |
+
+> **Recommendation:** Use `gp3` for new volumes — it's cheaper than `gp2` and lets you set IOPS independently.
+
 ### Step 1 — Create the Volume
 1. Go to **AWS Console → EC2 → Elastic Block Store → Volumes**
 2. Click **Create Volume**
@@ -70,6 +82,20 @@ When you attach an EBS volume as `/dev/sdf`, Linux shows it as `/dev/xvdf`. The 
 lsblk
 # xvdf should now appear in the output
 ```
+
+---
+
+## Filesystem Types
+
+| Filesystem | Best For | Max File Size | Notes |
+|------------|----------|---------------|-------|
+| `ext4` | General purpose Linux | 16 TB | Default on most Linux distros, stable and well-supported |
+| `xfs` | Large files, high performance | 8 EB | Default on RHEL/CentOS, great for big data |
+| `ext3` | Legacy systems | 2 TB | Older ext4 — avoid for new volumes |
+| `btrfs` | Snapshots, RAID features | 16 EB | Modern, but less battle-tested than ext4/xfs |
+| `tmpfs` | Temporary in-memory storage | RAM-limited | Lives in RAM — data lost on reboot |
+
+> For most EC2 workloads, use **ext4** (general use) or **xfs** (heavy throughput).
 
 ---
 
@@ -247,6 +273,34 @@ blkid /dev/tws_vg/tws_lv
 mount -a
 df -h
 ```
+
+### /etc/fstab Fields Explained
+
+Each line in `/etc/fstab` has 6 space-separated fields:
+
+```
+UUID=abc123  /mnt/data  ext4  defaults  0  2
+```
+
+| Field | Example | Meaning |
+|-------|---------|---------|
+| 1 — Device | `UUID=abc123` or `/dev/xvdf` | What to mount (UUID is preferred — stable across reboots) |
+| 2 — Mount point | `/mnt/data` | Where in the filesystem to mount it |
+| 3 — Filesystem type | `ext4` | Type of filesystem on the volume |
+| 4 — Options | `defaults` | Mount options (see below) |
+| 5 — Dump | `0` | Backup tool flag — almost always `0` |
+| 6 — fsck order | `2` | Filesystem check order at boot (`0`=skip, `1`=root, `2`=others) |
+
+**Common mount options:**
+
+| Option | Meaning |
+|--------|---------|
+| `defaults` | Standard options: rw, suid, exec, auto, nouser, async |
+| `ro` | Mount read-only |
+| `rw` | Mount read-write |
+| `noexec` | Prevent executing binaries from this volume |
+| `noatime` | Don't update access time on reads (improves performance) |
+| `nofail` | Don't fail boot if this device is missing |
 
 ---
 

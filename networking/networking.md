@@ -42,9 +42,14 @@ ping -s 1024 google.com
 ```
 
 **Reading ping output:**
-- `time=` — round-trip latency in ms (lower is better)
-- `ttl=` — Time To Live, shows how many hops away the server is
-- `packet loss` — % of packets that didn't return (0% is healthy)
+
+| Field | Meaning |
+|-------|---------|
+| `time=` | Round-trip latency in milliseconds (lower is better) |
+| `ttl=` | Time To Live — roughly shows how many hops away the host is |
+| `packet loss` | % of packets that didn't return (0% is healthy, >5% is a problem) |
+| `bytes` | Packet size sent (default 56 bytes) |
+| `icmp_seq` | Sequence number — gaps indicate dropped packets |
 
 ---
 
@@ -251,6 +256,20 @@ dig @8.8.8.8 google.com
 dig +trace google.com
 ```
 
+### DNS Record Types
+
+| Record | Full Name | Purpose |
+|--------|-----------|---------|
+| `A` | Address | Maps domain → IPv4 address |
+| `AAAA` | IPv6 Address | Maps domain → IPv6 address |
+| `CNAME` | Canonical Name | Alias — points one domain to another |
+| `MX` | Mail Exchange | Specifies mail servers for a domain |
+| `NS` | Name Server | Delegates DNS zone to name servers |
+| `TXT` | Text | Stores arbitrary text (SPF, DKIM, verification) |
+| `PTR` | Pointer | Reverse DNS — maps IP → domain |
+| `SOA` | Start of Authority | Zone metadata (TTL, admin email, serial) |
+| `SRV` | Service | Specifies host + port for a service |
+
 ---
 
 ### whois
@@ -289,6 +308,24 @@ arp -n             # Numeric output (no hostname resolution)
 ### curl
 
 Make HTTP/HTTPS requests from the command line. Supports GET, POST, headers, auth, and more.
+
+### curl Common Flags
+
+| Flag | Description |
+|------|-------------|
+| `-X METHOD` | Set HTTP method (GET, POST, PUT, DELETE, PATCH) |
+| `-H "Header: val"` | Add a request header |
+| `-d '{"key":"val"}'` | Send request body data |
+| `-I` | Fetch response headers only (HEAD request) |
+| `-L` | Follow redirects automatically |
+| `-O` | Download file, keep original filename |
+| `-o filename` | Download file, save as specified name |
+| `-u user:pass` | HTTP basic authentication |
+| `-k` | Skip SSL certificate verification |
+| `-v` | Verbose — show full request and response |
+| `-s` | Silent — suppress progress output |
+| `-w "%{http_code}"` | Print HTTP status code after request |
+| `\| jq` | Pipe to `jq` to pretty-print JSON response |
 
 ```bash
 # Basic GET request

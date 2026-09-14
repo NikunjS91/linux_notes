@@ -62,6 +62,18 @@
 | `date` | Show current date and time |
 | `clear` | Clear terminal screen (`Ctrl+L` also works) |
 
+### Redirection Operators
+
+| Operator | Meaning | Behaviour |
+|----------|---------|-----------|
+| `>` | Redirect stdout to file | Overwrites the file if it exists |
+| `>>` | Append stdout to file | Creates file if missing, appends if exists |
+| `2>` | Redirect stderr to file | Captures error messages only |
+| `2>&1` | Merge stderr into stdout | Both streams go to the same place |
+| `&>` | Redirect both stdout and stderr | Shorthand for `> file 2>&1` |
+| `<` | Read stdin from file | Command reads input from a file |
+| `\|` | Pipe | Sends stdout of one command as stdin to the next |
+
 ---
 
 ## File Operations
@@ -115,6 +127,12 @@ Prints output to terminal **and** writes to file simultaneously. Useful in pipel
 # Append instead of overwrite
 echo "hello" | tee -a hello.txt
 ```
+
+| Flag | Description |
+|------|-------------|
+| (none) | Write to file and print to terminal (overwrites) |
+| `-a` | Append to file instead of overwriting |
+| `file1 file2` | Write to multiple files at once |
 
 ---
 
@@ -217,6 +235,17 @@ ssh -i "linux-for-devops-key.pem" ubuntu@ec2-3-138-188-2.us-east-2.compute.amazo
 
 > **Signal difference:** `kill` (SIGTERM) asks the process to clean up and stop. `kill -9` (SIGKILL) forces the OS to terminate it immediately — no cleanup.
 
+### Common Kill Signals
+
+| Signal | Number | Meaning |
+|--------|--------|---------|
+| `SIGTERM` | `15` | Graceful shutdown — process can clean up (default) |
+| `SIGKILL` | `9` | Immediate force kill — no cleanup possible |
+| `SIGHUP` | `1` | Reload config — used by daemons (e.g. nginx) |
+| `SIGINT` | `2` | Interrupt — same as pressing `Ctrl+C` |
+| `SIGSTOP` | `19` | Pause/suspend a process |
+| `SIGCONT` | `18` | Resume a paused process |
+
 ### Memory & System Stats
 
 | Command | Description |
@@ -245,6 +274,18 @@ ssh -i "linux-for-devops-key.pem" ubuntu@ec2-3-138-188-2.us-east-2.compute.amazo
 | `Ctrl+C` | Kill a running foreground process |
 
 > **`nohup` use case:** Start a long-running script on a remote server via SSH — `nohup` ensures it keeps running even after you disconnect.
+
+### Job Control Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+C` | Kill the foreground process (SIGINT) |
+| `Ctrl+Z` | Suspend (pause) the foreground process |
+| `Ctrl+D` | Send EOF — exits a shell or interactive program |
+| `Ctrl+L` | Clear the terminal screen |
+| `Ctrl+A` | Move cursor to beginning of line |
+| `Ctrl+E` | Move cursor to end of line |
+| `Ctrl+R` | Search command history interactively |
 
 ---
 

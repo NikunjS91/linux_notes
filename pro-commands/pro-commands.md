@@ -30,6 +30,21 @@ grep [flags] "pattern" filename
 | `-E` | Extended regex — enables `+`, `?`, `|`, `()` patterns |
 | `--color` | Highlight matched text in color |
 
+### Regex Special Characters
+
+| Character | Meaning | Example |
+|-----------|---------|---------|
+| `.` | Any single character | `gr.p` matches `grep`, `grap` |
+| `*` | Zero or more of preceding | `ab*c` matches `ac`, `abc`, `abbc` |
+| `+` | One or more (needs `-E`) | `ab+c` matches `abc`, `abbc` |
+| `?` | Zero or one (needs `-E`) | `colou?r` matches `color` or `colour` |
+| `^` | Start of line | `^ERROR` — lines starting with ERROR |
+| `$` | End of line | `done$` — lines ending with done |
+| `[]` | Character class | `[aeiou]` matches any vowel |
+| `[^]` | Negated class | `[^0-9]` matches non-digit |
+| `\|` | OR (needs `-E`) | `error\|warn` matches either |
+| `\b` | Word boundary | `\berror\b` exact word match |
+
 ### Examples
 
 ```bash
@@ -143,6 +158,22 @@ awk '{count[$1]++} END {for (k in count) print k, count[k]}' file.txt
 awk 'BEGIN {print "Start"} {print $1} END {print "Done"}' file.txt
 ```
 
+### awk Comparison & Logical Operators
+
+| Operator | Meaning | Example |
+|----------|---------|---------|
+| `==` | Equal to | `$1 == "ERROR"` |
+| `!=` | Not equal | `$2 != "200"` |
+| `>` | Greater than | `$3 > 100` |
+| `<` | Less than | `$3 < 50` |
+| `>=` | Greater or equal | `$4 >= 500` |
+| `<=` | Less or equal | `$4 <= 10` |
+| `&&` | Logical AND | `$1 == "GET" && $2 > 200` |
+| `\|\|` | Logical OR | `$1 == "GET" \|\| $1 == "POST"` |
+| `!` | Logical NOT | `!($1 == "DEBUG")` |
+| `~` | Regex match | `$2 ~ /error/` |
+| `!~` | Regex not match | `$2 !~ /debug/` |
+
 ---
 
 ## sed — Stream Editor
@@ -155,6 +186,16 @@ sed 'expression' filename
 ```
 
 > Add `-i` flag to edit the file **in-place** (modifies the actual file).
+
+### sed Flags
+
+| Flag | Description |
+|------|-------------|
+| `-i` | Edit file in-place (overwrites original) |
+| `-i.bak` | In-place edit with a `.bak` backup created |
+| `-n` | Suppress default output (use with `p` to print selectively) |
+| `-e` | Chain multiple expressions: `sed -e 's/a/b/' -e 's/c/d/'` |
+| `-r` / `-E` | Use extended regular expressions |
 
 ### Substitution (Most Common)
 
