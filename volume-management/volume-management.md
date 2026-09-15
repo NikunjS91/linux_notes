@@ -50,6 +50,33 @@ When you attach an EBS volume as `/dev/sdf`, Linux shows it as `/dev/xvdf`. The 
 | `mount` | Show all currently mounted filesystems |
 | `umount /path` | Unmount a device from a directory |
 
+```bash
+# See all attached drives and their mount points
+lsblk
+# NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+# xvda    202:0    0    8G  0 disk
+# └─xvda1 202:1    0    8G  0 part /
+# xvdf    202:80   0   20G  0 disk          ← newly attached, not yet mounted
+
+# Include filesystem type and UUID
+lsblk -f
+
+# Check free/used space on all mounted filesystems
+df -h
+
+# Get the UUID of a specific device (needed for /etc/fstab)
+blkid /dev/xvdf
+
+# List all partitions (requires root)
+sudo fdisk -l
+
+# See everything currently mounted
+mount | column -t
+
+# Unmount a volume
+umount /mnt/data
+```
+
 ---
 
 ## Workflow: Attach an EBS Volume on AWS

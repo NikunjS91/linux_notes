@@ -277,7 +277,17 @@ dig +trace google.com
 Shows domain registration info — registrar, owner, creation/expiry dates, name servers.
 
 ```bash
+# Get domain registration details
 whois google.com
+
+# Look up an IP address (reverse whois)
+whois 8.8.8.8
+
+# Useful fields in output:
+# Registrar:         who registered it
+# Creation Date:     when it was first registered
+# Expiry Date:       when it expires
+# Name Server:       DNS servers for the domain
 ```
 
 ---
@@ -287,7 +297,13 @@ whois google.com
 ### route (older)
 
 ```bash
-route -n           # Show routing table with IP addresses
+# Show routing table with numeric IPs
+route -n
+
+# Example output:
+# Destination  Gateway      Genmask        Flags  Iface
+# 0.0.0.0      10.0.0.1     0.0.0.0        UG     eth0   ← default gateway
+# 10.0.0.0     0.0.0.0      255.255.255.0  U      eth0   ← local subnet
 ```
 
 ---
@@ -297,8 +313,17 @@ route -n           # Show routing table with IP addresses
 Discovers the MAC address associated with an IP on your local network.
 
 ```bash
-arp -a             # Show ARP cache (all known hosts)
-arp -n             # Numeric output (no hostname resolution)
+# Show all known IP-to-MAC mappings (ARP cache)
+arp -a
+
+# Numeric output (skip hostname resolution — faster)
+arp -n
+
+# Example output:
+# ? (192.168.1.1) at aa:bb:cc:dd:ee:ff [ether] on eth0
+
+# Delete a stale ARP entry
+arp -d 192.168.1.50
 ```
 
 ---
